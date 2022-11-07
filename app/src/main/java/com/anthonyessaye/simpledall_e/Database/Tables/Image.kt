@@ -1,20 +1,23 @@
 package com.anthonyessaye.simpledall_e.Database.Tables
 
+import android.os.Parcelable
 import io.realm.kotlin.types.ObjectId
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
-class Image: RealmObject {
+@Parcelize
+class Image(): RealmObject, Parcelable {
+    var imageURLString: String = ""
+        private set
 
-    @PrimaryKey
-    private val imageID: ObjectId = ObjectId.create()
-    private var imageURLString: String = ""
-    private var parentQueryID: ObjectId = ObjectId.create()
+    var parentQueryID: ObjectId = ObjectId.create()
+        private set
 
     constructor(urlString: String, parentQueryID: ObjectId): this() {
         this.imageURLString = urlString
         this.parentQueryID = parentQueryID
     }
 
-    constructor() { }
+
 }

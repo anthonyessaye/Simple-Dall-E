@@ -9,11 +9,15 @@ import org.json.JSONObject
 
 object APICalls {
     object POST {
+        /*
+            Call ported from API documentation through the CURL method on the following:
+            https://beta.openai.com/docs/guides/images/usage
+         */
         fun generateImages(query: String, numberOfImages: Int, imageSize: ImageSize, completion: (success: Boolean, urlArrayList: ArrayList<String>?) -> Void) {
             val appSettings: AppSettings? = DatabaseManager.Read.getAppSettings()
 
             if (appSettings != null) {
-                val apiToken = appSettings!!.getAPIToken()
+                val apiToken = appSettings.getAPIToken()
                 var params: ArrayList<Pair<String, Any>> = arrayListOf()
                 var headers: Map<String, Any>
 
@@ -36,8 +40,8 @@ object APICalls {
                                 if (dataObj != null) {
                                     var urlArrayList: ArrayList<String> = arrayListOf()
 
-                                    for(n in 0..dataObj!!.length() - 1) {
-                                        val urlJSONObject = dataObj!!.getJSONObject(n);
+                                    for(n in 0..dataObj.length() - 1) {
+                                        val urlJSONObject = dataObj.getJSONObject(n);
                                         val urlString = urlJSONObject.getString("url")
 
                                         urlArrayList.add(urlString)

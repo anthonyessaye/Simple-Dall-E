@@ -10,7 +10,7 @@ import com.anthonyessaye.simpledall_e.Database.Tables.Image
 import com.anthonyessaye.simpledall_e.R
 import com.bumptech.glide.Glide
 
-class ResultImageAdapter(private val mList: List<String>) : RecyclerView.Adapter<ResultImageAdapter.ViewHolder>() {
+class ResultImageAdapter(private val mList: List<Image>) : RecyclerView.Adapter<ResultImageAdapter.ViewHolder>() {
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,7 +25,7 @@ class ResultImageAdapter(private val mList: List<String>) : RecyclerView.Adapter
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val url = mList[position]
+        val url = mList[position].imageURLString
 
         Glide.with(holder.imageView).load(url).into(holder.imageView)
 

@@ -4,6 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import com.anthonyessaye.simpledall_e.Database.DatabaseManager
+import com.anthonyessaye.simpledall_e.Database.Tables.Image
+import io.realm.kotlin.types.RealmObject
+import kotlin.reflect.KClass
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var generateBtn: Button
@@ -19,6 +23,11 @@ class HomeActivity : AppCompatActivity() {
         generateBtn.setOnClickListener {
             val generationIntent = Intent(this, GenerateActivity::class.java)
             startActivity(generationIntent)
+        }
+
+        historyBtn.setOnClickListener {
+            val historyIntent = Intent(this, HistoryActivity::class.java)
+            startActivity(historyIntent)
         }
     }
 }
