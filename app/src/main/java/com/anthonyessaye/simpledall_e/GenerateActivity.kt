@@ -50,7 +50,7 @@ class GenerateActivity : AppCompatActivity() {
                         "Chosen Query: ${query}\n" +
                         "Number Of Images: ${imagesToGenerate}\n" +
                         "Chosen Resolution: ${resolution.resolution}x${resolution.resolution}\n" +
-                        "Total Cost: ${calculateCost(imagesToGenerate, resolution)}")
+                        "Total Cost: $${calculateCost(imagesToGenerate, resolution)}")
 
                 alertDialogBuilder.setPositiveButton("Go") { dialog, which ->
                     Toast.makeText(applicationContext,
