@@ -12,13 +12,13 @@ import io.realm.kotlin.types.ObjectId
 
 class ResultsActivity : AppCompatActivity() {
     private lateinit var resultsReyclerView: RecyclerView
-    var imageArray = ArrayList<Image>()
+    var imageArray = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_results)
 
-        imageArray = intent.extras?.getStringArrayList(TagConstants.INTENT_IMAGE_KEY) as ArrayList<Image>
+        imageArray = intent.extras?.getStringArrayList(TagConstants.INTENT_IMAGE_KEY) as ArrayList<String>
         resultsReyclerView = findViewById(R.id.resultsReyclerView)
 
         resultsReyclerView.layoutManager = LinearLayoutManager(this)

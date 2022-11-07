@@ -11,8 +11,12 @@ class PreviousQuery: RealmObject {
     var queryText: String = ""
         private set
 
-    constructor(queryText: String): this() {
+    var queryQualityRequested: Int = 0
+        private set
+
+    constructor(queryText: String, queryQualityRequested: Int): this() {
         this.queryText = queryText
+        this.queryQualityRequested = queryQualityRequested
     }
 
     constructor() { }

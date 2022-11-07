@@ -5,6 +5,7 @@ import com.anthonyessaye.simpledall_e.Database.Tables.AppSettings
 import com.anthonyessaye.simpledall_e.Enumerations.ImageSize
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.Parameters
+import com.github.kittinunf.fuel.core.extensions.jsonBody
 import org.json.JSONObject
 
 object APICalls {
@@ -13,28 +14,31 @@ object APICalls {
             Call ported from API documentation through the CURL method on the following:
             https://beta.openai.com/docs/guides/images/usage
          */
-        fun generateImages(query: String, numberOfImages: Int, imageSize: ImageSize, completion: (success: Boolean, urlArrayList: ArrayList<String>?) -> Void) {
+
+        fun generateImages(query: String, numberOfImages: Int, imageSize: ImageSize, completion: (success: Boolean, urlArrayList: ArrayList<String>?) -> Unit) {
             val appSettings: AppSettings? = DatabaseManager.Read.getAppSettings()
 
             if (appSettings != null) {
                 val apiToken = appSettings.getAPIToken()
-                var params: ArrayList<Pair<String, Any>> = arrayListOf()
-                var headers: Map<String, Any>
+                var params = JSONObject()
+                var headers: Map<String, String> = mapOf("Content-Type" to "application/json",
+                    "Authorization" to "Bearer ${apiToken}")
 
-                var contentType = Pair("Content-Type", "application/json")
-                var authorization = Pair("Authorization", "Bearer ${apiToken}")
-                headers = mapOf(contentType,authorization)
+                val size = (256 * (imageSize.ordinal + 1)).toString()
+                params.put("prompt", query)
+                params.put("n", numberOfImages)
+                params.put("size", size + "x" + size)
 
-                params.add(Pair("prompt",query))
-                params.add(Pair("n", numberOfImages))
-                params.add(Pair("size", "${(imageSize.ordinal + 1) * 256}x${(imageSize.ordinal + 1) * 256}"))
-
-                Fuel.post(APIEndpoints.generateURL, params).header(headers).response { request, response, result ->
+                Fuel.post(APIEndpoints.generateURL)
+                    .jsonBody(params.toString())
+                    .header(headers)
+                    .timeout(25000)
+                    .timeoutRead(25000)
+                    .responseString { request, response, result ->
                     result.fold(
                         success = {
                             if (it != null) {
-                                val str = String(it)
-                                val obj = JSONObject(str)
+                                val obj = JSONObject(it)
                                 val dataObj = obj.optJSONArray("data")
 
                                 if (dataObj != null) {

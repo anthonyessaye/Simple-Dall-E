@@ -42,10 +42,13 @@ class PreviousQueryAdapter(private val mList: List<PreviousQuery>,
 
         holder.itemView.setOnClickListener {
             val resultIntent = Intent(context, ResultsActivity::class.java)
-            var imageArrayList = arrayListOf<Image>()
-            imageArrayList.addAll(relatedImages)
+            var imageURLArrayList = arrayListOf<String>()
 
-            resultIntent.putParcelableArrayListExtra(TagConstants.INTENT_IMAGE_KEY, imageArrayList)
+            for (image in relatedImages) {
+                imageURLArrayList.add(image.imageURLString)
+            }
+
+            resultIntent.putStringArrayListExtra(TagConstants.INTENT_IMAGE_KEY, imageURLArrayList)
             context.startActivity(resultIntent)
         }
     }

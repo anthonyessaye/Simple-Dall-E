@@ -22,8 +22,10 @@ class HistoryActivity : AppCompatActivity() {
         val queryArray = DatabaseManager.Read.getPreviousQueries()
         val allImages = DatabaseManager.Read.getImages()
 
-        historyReyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter = PreviousQueryAdapter(queryArray, allImages, this)
-        historyReyclerView.adapter = adapter
+        if (!queryArray.isNullOrEmpty() && !allImages.isNullOrEmpty()) {
+            historyReyclerView.layoutManager = LinearLayoutManager(this)
+            val adapter = PreviousQueryAdapter(queryArray, allImages, this)
+            historyReyclerView.adapter = adapter
+        }
     }
 }
