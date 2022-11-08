@@ -80,6 +80,10 @@ class GenerateActivity : AppCompatActivity() {
                                 startActivity(resultIntent)
                             }
                         } else {
+                            runOnUiThread {
+                                loaderLayout.visibility = View.GONE
+                                Toast.makeText(this, "Something went wrong with that call", Toast.LENGTH_LONG).show()
+                            }
                             Log.i(TagConstants.TAG, "API Call Failed")
                         }
                     }

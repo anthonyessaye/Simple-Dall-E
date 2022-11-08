@@ -24,7 +24,7 @@ object APICalls {
                 var headers: Map<String, String> = mapOf("Content-Type" to "application/json",
                     "Authorization" to "Bearer ${apiToken}")
 
-                val size = (256 * (imageSize.ordinal + 1)).toString()
+                val size = (imageSize.resolution).toString()
                 params.put("prompt", query)
                 params.put("n", numberOfImages)
                 params.put("size", size + "x" + size)
@@ -32,6 +32,8 @@ object APICalls {
                 Fuel.post(APIEndpoints.generateURL)
                     .jsonBody(params.toString())
                     .header(headers)
+                    .timeout(60000)
+                    .timeoutRead(60000)
                     .responseString { request, response, result ->
                     result.fold(
                         success = {
