@@ -32,8 +32,6 @@ object APICalls {
                 Fuel.post(APIEndpoints.generateURL)
                     .jsonBody(params.toString())
                     .header(headers)
-                    .timeout(25000)
-                    .timeoutRead(25000)
                     .responseString { request, response, result ->
                     result.fold(
                         success = {
